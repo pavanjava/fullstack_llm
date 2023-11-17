@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+        }
+
+        .chat-container {
+            flex-grow: 1;
+            height: 100%;
+            /*border: 1px solid #ccc;
+            border-radius: 8px;*/
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            background-color: #343541;
+            color: #ffffff;
+        }
+
+        .chat-header {
+            /*background-color: #2d2d2d;*/
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            /*border-bottom: 1px solid #ccc;*/
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            max-height: 650px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+        }
+
+        .user-message {
+            text-align: right;
+        }
+
+        .message-content {
+            /*background-color: #2d2d2d;*/
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 10px;
+            display: inline-block;
+            max-width: 70%;
+        }
+
+        .bot-message {
+            text-align: left;
+        }
+
+        .user-input-container {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            background-color: #343541; /* Updated color */
+            /*border-top: 1px solid #ccc;*/
+            align-items: flex-end;
+        }
+
+        .input-box {
+            width: calc(100% - 30px); /* Adjust the padding for the chat icon */
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #343541;
+            color: #ffffff;
+        }
+
+        .chat-icon {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        .input-box-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .side-container {
+            width: 200px;
+            padding: 15px;
+            background-color: #000000; /* Updated color */
+            color: #ffffff; /* Updated color */
+            box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .upload-button {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #2d2d2d;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">PK GPT</div> <!-- keep the name of the app if required-->
+    <div class="chat-messages" id="chat-messages">
+        <div class="message bot-message">
+            <div class="message-content">GPT: Hello! How can I assist you today?</div>
+        </div>
+    </div>
+    <div class="user-input-container">
+        <div class="input-box-container">
+            <input type="text" class="input-box" id="user-input" placeholder="Type your message...">
+            <div class="chat-icon" onclick="sendMessage()">💬</div>
+        </div>
+    </div>
+</div>
+
+<div class="side-container">
+    <div class="upload-button">Upload File</div>
+    <input type="file">
+</div>
+
+<script>
+    function sendMessage() {
+        var userInput = document.getElementById("user-input").value;
+
+        // Append user message to chat
+        var chatMessages = document.getElementById("chat-messages");
+        var userMessageDiv = document.createElement("div");
+        userMessageDiv.className = "message user-message";
+        userMessageDiv.innerHTML = '<div class="message-content"> User: ' + userInput + '</div>';
+        chatMessages.appendChild(userMessageDiv);
+
+        // Simulate bot response (you can replace this with actual API call and response handling)
+        setTimeout(function () {
+            var botMessageDiv = document.createElement("div");
+            botMessageDiv.className = "message bot-message";
+            botMessageDiv.innerHTML = '<div class="message-content"> GPT: Sure, here is a sample response.</div>';
+            chatMessages.appendChild(botMessageDiv);
+        }, 500);
+
+        // Clear input after sending message
+        document.getElementById("user-input").value = "";
+    }
+</script>
+
+</body>
+</html>
