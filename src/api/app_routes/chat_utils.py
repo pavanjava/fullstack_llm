@@ -15,6 +15,6 @@ class Payload(BaseModel):
 async def chat(request: Payload):
     try:
         agent = KnowledgeAgent(path=knowledge_destination)
-        return agent.query(user_query=request.query)
+        return {'data': agent.query(user_query=request.query)}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)

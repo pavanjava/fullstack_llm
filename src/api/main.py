@@ -6,9 +6,14 @@ from src.api.app_routes.chat_utils import chat_routes
 
 app = FastAPI()
 origin_list = [
-    'http://localhost:3000', 'http://localhost'
+    'http://localhost:5173', 'http://localhost', '*'
 ]
-app.add_middleware(middleware_class=CORSMiddleware, allow_origins=origin_list)
+app.add_middleware(
+    middleware_class=CORSMiddleware,
+    allow_origins=origin_list,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 app.include_router(upload_router, prefix="/api/upload")
 app.include_router(chat_routes, prefix="/api")
 
