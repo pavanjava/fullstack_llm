@@ -1,6 +1,5 @@
 import {messageType} from "../types/ApplicationTypes.ts";
 
-// @ts-ignore
 export const ChatArea = ({messages}: any) => {
     return(
         <div className="chat-messages" id="chat-messages" >
