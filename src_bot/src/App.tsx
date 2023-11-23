@@ -9,17 +9,17 @@ import {FileUploader} from "./components/knowledge-expoter.tsx";
 
 const App = () => {
 
-    const [messages, setMessages] = useState([
+    const [messages, setMessages]: [messageType[], Function] = useState([
         {'role': 'bot', 'content': 'Hi! This is Jarvis, your proprietary data bot. '}
     ]);
 
-    const [userInput, setUserInput] = useState("");
+    const [userInput, setUserInput]: [string, Function] = useState("");
 
     const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUserInput(event.target.value)
     }
 
-    const [showLoader, setShowLoader] = useState(false)
+    const [showLoader, setShowLoader]: [boolean, Function] = useState(false)
 
     const sendMessage = (): void => {
         const temp: messageType[] = [];
@@ -40,17 +40,17 @@ const App = () => {
 
     return (
         <>
+            <FileUploader/>
             <div className="chat-container">
                 <div className="chat-header">PK Bot</div>
                 <ChatArea messages={messages}/>
                 <div>
                     {
-                        showLoader?<img src={loader} className={'loader'}/>:''
+                        showLoader?<img src={loader} className={'loader'} alt={'loader image'}/>:''
                     }
                 </div>
                 <UserInput handleTextChange={handleTextChange} sendMessage={sendMessage}/>
             </div>
-            <FileUploader/>
         </>
     )
 }
