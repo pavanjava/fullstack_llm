@@ -1,9 +1,11 @@
 import './App.css'
-import {useState} from "react";
+import React, {useState} from "react";
 import axios, {AxiosResponse} from "axios";
-
-
-type messageType = { role: string, content: string }
+import loader from './assets/loader.gif'
+import {messageType} from "./types/ApplicationTypes.ts";
+import {ChatArea} from "./components/chatarea.tsx";
+import {UserInput} from "./components/userinput.tsx";
+import {FileUploader} from "./components/knowledge-expoter.tsx";
 
 const App = () => {
 
@@ -17,13 +19,20 @@ const App = () => {
         setUserInput(event.target.value)
     }
 
+    const [showLoader, setShowLoader] = useState(false)
+
     const sendMessage = (): void => {
         const temp: messageType[] = [];
         messages.forEach((message: messageType) => temp.push(message))
         temp.push({'role': 'user', 'content': userInput});
-
+        setShowLoader(true)
         axios.post('http://localhost:8080/api/chat', {'query': userInput}).then((response: AxiosResponse<any, any>): void => {
-            temp.push({'role': 'bot', 'content': response.data.data});
+            if(userInput.includes("database:")){
+                temp.push({'role': 'bot', 'content': 'Result= '.concat(response.data.data.result).concat("\n Query= ").concat(response.data.data.query)});
+            }else{
+                temp.push({'role': 'bot', 'content': response.data.data});
+            }
+            setShowLoader(false);
             setMessages(temp);
             setUserInput("")
         });
@@ -33,41 +42,15 @@ const App = () => {
         <>
             <div className="chat-container">
                 <div className="chat-header">PK Bot</div>
-                <div className="chat-messages" id="chat-messages" >
+                <ChatArea messages={messages}/>
+                <div>
                     {
-                        messages.map((object: messageType, index: number) => {
-                            if (object.role === 'bot') {
-                                return (
-                                    <div className="message bot-message" key={index}>
-                                        <div className="message-content">{'Bot: '.concat(object.content)}</div>
-                                    </div>
-
-                                )
-                            }else{
-                                return (
-                                    <div className="message user-message" key={index}>
-                                        <div className="message-content">{'User: '.concat(object.content)}</div>
-                                    </div>
-
-                                )
-                            }
-                        })
+                        showLoader?<img src={loader} className={'loader'}/>:''
                     }
                 </div>
-                <div className="user-input-container">
-                    <div className="input-box-container">
-                        <input type="text" className="input-box" id="user-input"
-                               placeholder="Type your message..."
-                               onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleTextChange(event)}></input>
-                        <div className="chat-icon" onClick={() => sendMessage()}>💬</div>
-                    </div>
-                </div>
+                <UserInput handleTextChange={handleTextChange} sendMessage={sendMessage}/>
             </div>
-
-            <div className="side-container">
-                <div className="upload-button">Upload File</div>
-                <input type="file"></input>
-            </div>
+            <FileUploader/>
         </>
     )
 }
