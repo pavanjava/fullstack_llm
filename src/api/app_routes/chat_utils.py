@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from src.core.knowledge_agent import KnowledgeAgent
 from src.core.text2sql import Text2SqlAgent
 
-knowledge_destination = "/Users/pavanmantha/Pavans/PracticeExamples/DataScience_Practice/LLMs/llama_index_tutorials/fullstack_llm/data"
+knowledge_destination = "src/data"
 chat_routes = r = APIRouter()
 
 
