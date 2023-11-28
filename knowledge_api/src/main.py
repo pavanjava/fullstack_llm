@@ -1,8 +1,9 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.api.routes.upload_utils import upload_router
-from src.api.routes.chat_utils import chat_routes
+
+from src.chat_utils import chat_routes
+from src.upload_utils import upload_router
 
 app = FastAPI()
 origin_list = [

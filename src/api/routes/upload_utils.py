@@ -3,7 +3,7 @@ import shutil
 from os import path
 
 upload_router = r = APIRouter()
-knowledge_destination = "/Users/pavanmantha/Pavans/PracticeExamples/DataScience_Practice/LLMs/llama_index_tutorials/fullstack_llm/data/"
+knowledge_destination = "src/api/data"
 
 
 @r.post("/file")

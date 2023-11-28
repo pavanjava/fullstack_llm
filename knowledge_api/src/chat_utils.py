@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
-from src.core.knowledge_agent import KnowledgeAgent
-from src.core.text2sql import Text2SqlAgent
+from src.knowledge_agent import KnowledgeAgent
+from src.text2sql import Text2SqlAgent
 
 knowledge_destination = "src/data"
 chat_routes = r = APIRouter()
@@ -23,4 +23,5 @@ async def chat(request: Payload):
         else:
             return {'data': knowledge_agent.query(user_query=request.query)}
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
